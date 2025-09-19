@@ -1,0 +1,19 @@
+tailers:
+  windows:
+    # Example Windows Event Log tailer configuration
+    # This configuration collects up to 10 events from the Security log
+    # that were created in the last hour.
+    #
+    # You can copy xpaths from Windows Event Viewer:
+    # 1. Open Event Viewer (eventvwr.msc)
+    # 2. Navigate to the desired log (e.g., Windows Logs -> Security)
+    # 3. Click "Filter Current Log..."
+    # 4. Go to the XML tab and check "Edit query manually"
+    # 5. Copy the XPath query and paste it below
+    # 
+    # Example XPath query:
+    #   <Select Path="Security">*[System[TimeCreated[timediff(@SystemTime) <= 3600000]]]</Select>
+    #   ==> Security: "*[System[TimeCreated[timediff(@SystemTime) <= 3600000]]]"
+    - maxEvents: 10
+      xpaths:
+        Security: "*[System[TimeCreated[timediff(@SystemTime) <= 3600000]]]"
