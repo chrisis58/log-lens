@@ -1,6 +1,6 @@
 # Log-Lens: A Self-Hosted, AI-Powered Log Analysis Assistant
 
-**English** | [简体中文](./README.md)
+**English** | [简体中文](./README.zh.md)
 
 > Status: Active Early Development
 >
