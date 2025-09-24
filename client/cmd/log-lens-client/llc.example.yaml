@@ -24,3 +24,8 @@ tailers:
 state:
   sqlite:
     dbPath: llc.db
+
+# TODO: currently only console shipper is supported, need to implement http-shipper
+shipper:
+  remoteUrl: "http://localhost:8080/logs"
+  token: "your-auth-token"

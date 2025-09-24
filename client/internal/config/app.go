@@ -18,6 +18,14 @@ type AppConfig struct {
 	Tailers map[string][]yaml.Node `yaml:"tailers"`
 
 	State map[string]yaml.Node `yaml:"state"`
+
+	Shipper yaml.Node `yaml:"shipper"`
+}
+
+// TODO: add http-shipper
+type ShipperConfig struct {
+	RemoteUrl string `yaml:"remoteUrl"`
+	Token     string `yaml:"token"`
 }
 
 func LoadConfig() (*AppConfig, error) {

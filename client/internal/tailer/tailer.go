@@ -26,7 +26,7 @@ func RegisterTailer[C any](name string, constructor registry.FactoryFuncWithConf
 	registry.Register(tailerRegistry, name, constructor)
 }
 
-func GetTailer(tailerType string, tailerConf *yaml.Node, deps TailerDeps) (Tailer, error) {
+func GetTailer(tailerType string, tailerConf yaml.Node, deps TailerDeps) (Tailer, error) {
 	tailer, err := tailerRegistry.Get(tailerType, tailerConf, deps)
 	if err != nil {
 		return nil, fmt.Errorf("unknown tailer type: %s", tailerType)

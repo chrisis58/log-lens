@@ -40,7 +40,7 @@ func RegisterStateManager[C any](name string, constructor registry.FactoryFuncWi
 	registry.Register(bookmarkStateRegistry, name, constructor)
 }
 
-func GetStateManager(stateType string, stateConf *yaml.Node, deps StateDeps) (StateManager, error) {
+func GetStateManager(stateType string, stateConf yaml.Node, deps StateDeps) (StateManager, error) {
 	if stateType == "" {
 		// default to sqlite
 		stateType = SQLITE_STATE_MANAGER
@@ -51,4 +51,15 @@ func GetStateManager(stateType string, stateConf *yaml.Node, deps StateDeps) (St
 		return nil, err
 	}
 	return stateManager, nil
+}
+
+func Get(stateConf map[string]yaml.Node, deps StateDeps) (StateManager, error) {
+	var stateType = ""
+	for k := range stateConf {
+		// only use the first state config
+		stateType = k
+		break
+	}
+	stateConfig := stateConf[stateType]
+	return GetStateManager(stateType, stateConfig, deps)
 }
