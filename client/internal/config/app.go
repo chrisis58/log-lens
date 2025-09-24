@@ -16,6 +16,8 @@ const CONFIG_FILENAME = ".log-lens-client.yaml"
 
 type AppConfig struct {
 	Tailers map[string][]yaml.Node `yaml:"tailers"`
+
+	State map[string]yaml.Node `yaml:"state"`
 }
 
 func LoadConfig() (*AppConfig, error) {

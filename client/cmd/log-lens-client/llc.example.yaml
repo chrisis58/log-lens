@@ -18,3 +18,9 @@ tailers:
       maxEvents: 10
       xpaths:
         Security: "*[System[TimeCreated[timediff(@SystemTime) <= 3600000]]]"
+
+# Optional state configuration
+# Default is sqlite with "llc.db" in the current directory
+state:
+  sqlite:
+    dbPath: llc.db

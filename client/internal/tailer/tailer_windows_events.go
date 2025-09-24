@@ -11,26 +11,21 @@ import (
 	"github.com/google/winops/winlog"
 	"github.com/google/winops/winlog/wevtapi"
 	"golang.org/x/sys/windows"
-	"golang.org/x/sys/windows/registry"
+
+	"github.com/chrisis58/log-lens/client/internal/state"
+)
+
+const (
+	WINDOWS_EVTLOG_TAILER          = "windows"
+	WINDOWS_EVTLOG_BOOKMARK_PREFIX = "llc:windows:" // llc: means Log Lens Client
 )
 
 func init() {
-	// ensure the registry path exists
-	k, _, err := registry.CreateKey(registry.CURRENT_USER, BOOKMARK_REGISTRY_PATH, registry.ALL_ACCESS)
-	if err != nil {
-		panic(fmt.Errorf("fail to create bookmark from registry '%s': %w", BOOKMARK_REGISTRY_PATH, err))
-	}
-	k.Close()
-
-	RegisterTailer("windows", NewWindowsEventsTailer)
+	RegisterTailer(WINDOWS_EVTLOG_TAILER, NewWindowsEventsTailer)
 }
 
-const (
-	BOOKMARK_REGISTRY_PATH = `SOFTWARE\LogLensClient\WindowsEventLogBookmarks`
-	BOOKMARK_KEY_PREFIX    = "llc:" // llc: means Log Lens Client
-)
-
 type WindowsEventsTailer struct {
+	state    state.BookmarkState
 	bookmark string
 
 	maxEvents      int
@@ -51,13 +46,18 @@ type WindowsConfig struct {
 	MaxEvents int               `yaml:"maxEvents"`
 }
 
-func NewWindowsEventsTailer(conf WindowsConfig) (Tailer, error) {
+func NewWindowsEventsTailer(conf WindowsConfig, deps TailerDeps) (Tailer, error) {
+	if deps.State == nil {
+		log.Println("deps.State is nil")
+		return nil, fmt.Errorf("TailerDeps.State is nil, please initialize state before creating WindowsEventsTailer")
+	}
+
 	config, err := winlog.DefaultSubscribeConfig()
 	if err != nil {
 		return nil, fmt.Errorf("fail to get default subscribe config: %w", err)
 	}
 
-	resolveDefaultValues(&conf)
+	resolveWindowsConfigDefaultValues(&conf)
 
 	config.SignalEvent, err = windows.CreateEvent(nil, 1, 1, nil)
 	if err != nil {
@@ -77,13 +77,20 @@ func NewWindowsEventsTailer(conf WindowsConfig) (Tailer, error) {
 		return nil, fmt.Errorf("fail to convert query string: %w", err)
 	}
 
-	err = winlog.GetBookmarkRegistry(config, registry.CURRENT_USER, BOOKMARK_REGISTRY_PATH, BOOKMARK_KEY_PREFIX+conf.Name)
+	state := deps.State
+	bookmarkXML, err := state.Load(WINDOWS_EVTLOG_BOOKMARK_PREFIX + conf.Name)
+	if err != nil {
+		config.Close()
+		return nil, fmt.Errorf("fail to load bookmark from state: %w", err)
+	}
+	config.Bookmark, err = winlog.CreateBookmark(bookmarkXML)
 	if err != nil {
 		log.Printf("fail to load bookmark from registry: %v", err)
 	}
 
 	return &WindowsEventsTailer{
-		bookmark:       BOOKMARK_KEY_PREFIX + conf.Name,
+		state:          state,
+		bookmark:       WINDOWS_EVTLOG_BOOKMARK_PREFIX + conf.Name,
 		maxEvents:      conf.MaxEvents,
 		cfg:            config,
 		publisherCache: make(map[string]windows.Handle),
@@ -92,7 +99,7 @@ func NewWindowsEventsTailer(conf WindowsConfig) (Tailer, error) {
 	}, nil
 }
 
-func resolveDefaultValues(conf *WindowsConfig) {
+func resolveWindowsConfigDefaultValues(conf *WindowsConfig) {
 	if conf.MaxEvents == 0 {
 		conf.MaxEvents = 10
 	}
@@ -162,10 +169,13 @@ func (w *WindowsEventsTailer) run() {
 						return
 					}
 				}
-				err = winlog.SetBookmarkRegistry(w.cfg.Bookmark, registry.CURRENT_USER, BOOKMARK_REGISTRY_PATH, w.bookmark)
+
+				bookmarkXML, err := winlog.RenderFragment(w.cfg.Bookmark, wevtapi.EvtRenderBookmark)
 				if err != nil {
-					w.errors <- fmt.Errorf("fail to save bookmark to registry: %w", err)
+					w.errors <- fmt.Errorf("RenderFragment failed: %v", err)
 				}
+				w.state.Save(w.bookmark, bookmarkXML)
+				// save bookmark
 			}
 		}
 	}
