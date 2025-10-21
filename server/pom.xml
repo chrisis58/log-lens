@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>cn.teacy.loglens</groupId>
+	<artifactId>log-lens-server</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>log-lens-server</name>
+	<description>
+		Backend server for Log Lens application
+	</description>
+	<url>https://github.com/chrisis58/log-lens</url>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>chris zheng</name>
+			<email>chrisis58@outlook.com</email>
+			<url>https://github.com/chrisis58</url>
+		</developer>
+	</developers>
+
+	<properties>
+		<java.version>17</java.version>
+
+		<spring-boot.version>3.4.8</spring-boot.version>
+		<spring-ai.version>1.0.1</spring-ai.version>
+
+		<spring-ai-alibaba.version>1.1.0.0-SNAPSHOT</spring-ai-alibaba.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Spring Boot -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- Spring AI -->
+			<dependency>
+				<groupId>org.springframework.ai</groupId>
+				<artifactId>spring-ai-bom</artifactId>
+				<version>${spring-ai.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!--
+				Spring AI Alibaba
+
+				NOTE: Since spring-ai-alibaba is not yet officially released,
+					  you should install it to your local Maven repository manually.
+
+				>>> git clone https://github.com/alibaba/spring-ai-alibaba.git
+				>>> cd spring-ai-alibaba
+				>>> mvn clean install -DskipTests
+			-->
+			<dependency>
+				<groupId>com.alibaba.cloud.ai</groupId>
+				<artifactId>spring-ai-alibaba-bom</artifactId>
+				<version>${spring-ai-alibaba.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- Tools -->
+
+
+			<!-- Model Provider -->
+
+
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

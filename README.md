@@ -4,7 +4,7 @@
 
 > Status: Active Early Development
 >
-> Core Tech Stack: Agent (Go) | Server (Python/FastAPI) | LLM (Ollama) | WebUI (Vue.js / React) 
+> Core Tech Stack: Agent (Go) | Server (spring-ai-alibaba) | LLM (Ollama) | WebUI (Vue.js / React) 
 
 ## Vision
 Have you ever found yourself working through massive volumes of service logs, trying to find the root cause of an issue amidst the noise? Traditional log management tools help aggregate and search logs, but this remains a reactive and time-consuming process.

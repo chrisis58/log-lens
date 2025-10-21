@@ -4,7 +4,7 @@
 
 > 项目状态： 积极开发中
 >
-> 技术栈核心： 客户端 (Go) | 服务端 (Python/FastAPI) | 大模型 (Ollama) | WebUI (Vue.js / React)
+> 技术栈核心： 客户端 (Go) | 服务端 (spring-ai-alibaba) | 大模型 (Ollama) | WebUI (Vue.js / React)
 
 ## 项目愿景
 
