@@ -9,10 +9,10 @@
 	<packaging>pom</packaging>
 
 	<name>log-lens-server</name>
+	<url>https://github.com/chrisis58/log-lens</url>
 	<description>
 		Backend server for Log Lens application
 	</description>
-	<url>https://github.com/chrisis58/log-lens</url>
 
 	<licenses>
 		<license>
@@ -28,6 +28,11 @@
 			<url>https://github.com/chrisis58</url>
 		</developer>
 	</developers>
+	<modules>
+		<module>log-lens-server-core</module>
+		<module>log-lens-server-app</module>
+		<module>log-lens-server-common</module>
+	</modules>
 
 	<properties>
 		<java.version>17</java.version>
