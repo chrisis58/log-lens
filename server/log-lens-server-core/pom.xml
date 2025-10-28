@@ -6,7 +6,7 @@
     <parent>
         <groupId>cn.teacy.loglens</groupId>
         <artifactId>log-lens-server</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>log-lens-server-core</artifactId>
