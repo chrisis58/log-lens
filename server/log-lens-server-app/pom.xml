@@ -30,7 +30,7 @@
         <dependency>
             <groupId>cn.teacy.loglens</groupId>
             <artifactId>log-lens-serer-ingestion</artifactId>
-            <version>${project.parent.version}</version>
+            <version>${revision}</version>
         </dependency>
 
     </dependencies>
