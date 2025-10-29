@@ -33,5 +33,17 @@
             <version>${revision}</version>
         </dependency>
 
+        <dependency>
+            <groupId>cn.teacy.loglens</groupId>
+            <artifactId>log-lens-server-common</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.teacy.loglens</groupId>
+            <artifactId>log-lens-server-agent</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
     </dependencies>
 </project>
