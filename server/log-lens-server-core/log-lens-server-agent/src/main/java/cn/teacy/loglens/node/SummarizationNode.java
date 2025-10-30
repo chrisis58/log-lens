@@ -1,7 +1,6 @@
 package cn.teacy.loglens.node;
 
 import cn.teacy.loglens.graph.LogLensGraphKeys;
-import cn.teacy.loglens.interfaces.IdProvider;
 import cn.teacy.loglens.properties.AgentProperties;
 import com.alibaba.cloud.ai.graph.action.NodeAction;
 import com.alibaba.cloud.ai.graph.node.AgentNode;
@@ -10,7 +9,7 @@ import org.springframework.ai.tool.ToolCallback;
 
 import java.util.Map;
 
-public class SummarizationNode implements NodeWrapper, IdProvider<String> {
+public class SummarizationNode implements NodeWrapper {
 
     public static final String NODE_ID = "summarization-agent";
 

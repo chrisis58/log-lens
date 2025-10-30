@@ -1,7 +1,6 @@
 package cn.teacy.loglens.node;
 
 import cn.teacy.loglens.graph.LogLensGraphKeys;
-import cn.teacy.loglens.interfaces.IdProvider;
 import cn.teacy.loglens.properties.AgentProperties;
 import com.alibaba.cloud.ai.graph.action.NodeAction;
 import com.alibaba.cloud.ai.graph.node.QuestionClassifierNode;
@@ -12,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class ClassifierNode implements IdProvider<String>, NodeWrapper {
+public class ClassifierNode implements NodeWrapper {
 
     public static final String NODE_ID = "classifier-agent";
 
