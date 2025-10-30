@@ -45,11 +45,15 @@
 
         <dependency>
             <groupId>com.alibaba.cloud.ai</groupId>
-            <artifactId>spring-ai-alibaba-agent-framework</artifactId>
+            <artifactId>spring-ai-alibaba-graph-core</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>com.alibaba.cloud.ai</groupId>
-                    <artifactId>spring-ai-alibaba-starter-dashscope</artifactId>
+                    <groupId>org.jboss.logmanager</groupId>
+                    <artifactId>jboss-logmanager</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jboss.logging</groupId>
+                    <artifactId>jboss-logging</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -58,6 +62,11 @@
             <groupId>cn.teacy.loglens</groupId>
             <artifactId>log-lens-server-common</artifactId>
             <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.felipestanzani</groupId>
+            <artifactId>jtoon</artifactId>
         </dependency>
 
     </dependencies>
