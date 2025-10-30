@@ -12,7 +12,7 @@
     <artifactId>log-lens-server-core</artifactId>
     <packaging>pom</packaging>
 
-    <name>log-lens-server-api</name>
+    <name>log-lens-server-core</name>
     <url>https://github.com/chrisis58/log-lens</url>
     <description>
         Parent module for log-lens-server core components
